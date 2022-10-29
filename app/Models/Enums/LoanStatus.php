@@ -2,9 +2,9 @@
 
 namespace App\Models\Enums;
 
-enum LoanStatus
+enum LoanStatus: string
 {
-    case PENDING;
-    case APPROVED;
-    case PAID;
+    case PENDING = 'pending';
+    case APPROVED = 'approved';
+    case PAID = 'paid';
 }

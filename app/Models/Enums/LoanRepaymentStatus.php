@@ -2,8 +2,8 @@
 
 namespace App\Models\Enums;
 
-enum LoanRepaymentStatus
+enum LoanRepaymentStatus: string
 {
-    case PENDING;
-    case PAID;
+    case PENDING = 'pending';
+    case PAID = 'paid';
 }

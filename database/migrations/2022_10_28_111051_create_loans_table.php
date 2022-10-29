@@ -12,9 +12,9 @@ return new class extends Migration
         Schema::create('loans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->decimal('amount');
+            $table->integer('amount');
             $table->integer('term')->comment('stored and calculated based on weekly term');
-            $table->string('status')->default(LoanStatus::PENDING);
+            $table->string('status')->default(LoanStatus::PENDING->value);
             $table->timestamps();
         });
     }

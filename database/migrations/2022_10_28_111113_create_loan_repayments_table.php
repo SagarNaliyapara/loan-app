@@ -12,7 +12,7 @@ return new class extends Migration
         Schema::create('loan_repayments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('loan_id')->constrained();
-            $table->string('status')->default(LoanRepaymentStatus::PENDING);
+            $table->string('status')->default(LoanRepaymentStatus::PENDING->value);
             $table->timestamps();
         });
     }
