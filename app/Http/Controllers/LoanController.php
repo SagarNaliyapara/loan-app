@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoanCreateRequest;
+use App\Models\Loan;
 
 class LoanController extends Controller
 {

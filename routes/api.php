@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LoanController;
+use App\Http\Controllers\LoanViewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,4 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('loans', [LoanController::class, 'create'])->name('loan.create');
+    Route::get('loans', LoanViewController::class)->name('loan.view');
 });
