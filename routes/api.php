@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\ApproveLoan;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\LoanViewController;
+use App\Models\Loan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,5 +24,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('loans', [LoanController::class, 'create'])->name('loan.create');
-    Route::get('loans', LoanViewController::class)->name('loan.view');
+    Route::get('loans/{loan}', LoanViewController::class)->name('loan.view')->can('view', Loan::class);
+    Route::get('loans/{loan}', ApproveLoan::class)->name('loan.approve');
 });

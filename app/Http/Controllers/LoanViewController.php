@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\LoanResource;
-use App\Services\loanService;
+use App\Models\Loan;
+use App\Services\LoanService;
 
 class LoanViewController extends Controller
 {
-    public function __construct(readonly private loanService $loanService)
+    public function __construct(readonly private LoanService $loanService)
     {
     }
 
-    public function __invoke()
+    public function __invoke(Loan $loan)
     {
-        return LoanResource::collection($this->loanService->getLoanDetails());
+        return new LoanResource($this->loanService->getLoanDetails($loan, auth()->user()));
     }
 }
