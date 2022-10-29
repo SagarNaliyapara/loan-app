@@ -9,8 +9,8 @@ class LoanCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'amount' => 'required|integer',
-            'term' => 'required|integer',
+            'amount' => 'required|min:1|integer',
+            'term' => 'required|min:1|integer',
         ];
     }
 }

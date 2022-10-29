@@ -13,6 +13,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('loan_id')->constrained();
             $table->string('status')->default(LoanRepaymentStatus::PENDING->value);
+            $table->date('date');
             $table->timestamps();
         });
     }

@@ -1,7 +1,10 @@
 <?php
 
-use App\Http\Controllers\LoanController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\LoanApprove;
+use App\Http\Controllers\LoanCreate;
+use App\Http\Controllers\LoanRepayment;
+use App\Http\Controllers\LoanView;
+use App\Models\Loan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,10 +18,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('loans', [LoanController::class, 'create'])->name('loan.create');
+    Route::post('loans', LoanCreate::class)->name('loans.create');
+    Route::get('loans/{loan}', LoanView::class)->name('loans.view')
+        ->middleware('can:view,loan');
+    Route::put('loans/{loan}/approve', LoanApprove::class)->name('loans.approve')
+        ->middleware('can:update,loan');
+    Route::post('loans/{loan}', LoanRepayment::class)->name('loans.repayment');
 });
