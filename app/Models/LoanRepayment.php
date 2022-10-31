@@ -10,6 +10,10 @@ class LoanRepayment extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'loan_id', 'status', 'repayment_date',
+    ];
+
     public function loan(): BelongsTo
     {
         return  $this->belongsTo(Loan::class);

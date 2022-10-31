@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Enums\LoanStatus;
 use App\Models\Loan;
-use Illuminate\Http\Request;
+use App\Services\LoanService;
 
 class ApproveLoan extends Controller
 {
-    public function __invoke(Loan $loan, Request $request)
+    public function __construct(readonly private LoanService $loanService)
     {
-        $loan->update([
-            'status' => LoanStatus::APPROVED,
-        ]);
+    }
+
+    public function __invoke(Loan $loan)
+    {
+        $this->loanService->appoveLoan($loan, auth()->user());
     }
 }

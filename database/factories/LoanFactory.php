@@ -12,7 +12,7 @@ class LoanFactory extends Factory
     {
         return [
             'user_id' => User::class,
-            'amount' => '2500',
+            'amount' => '1000',
             'term' => '4',
             'status' => LoanStatus::PENDING->value,
         ];

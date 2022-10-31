@@ -3,15 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoanCreateRequest;
-use App\Models\Loan;
+use App\Services\LoanService;
 
 class LoanController extends Controller
 {
-    public function create(LoanCreateRequest $request)
+    public function __construct(readonly private LoanService $loanService)
+    {
+    }
+
+    public function __invoke(LoanCreateRequest $request)
     {
         $data = $request->validated();
-        $data['user_id'] = $request->user()->id;
+        $this->loanService->createLoan($data, auth()->user());
 
-        return Loan::query()->create($data);
+        return response()->json([
+            'message' => 'Create a loan successful',
+        ]);
     }
 }

@@ -11,6 +11,10 @@ class Loan extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+      'amount', 'term', 'user_id', 'status',
+    ];
+
     public function user(): BelongsTo
     {
         return  $this->belongsTo(User::class);
