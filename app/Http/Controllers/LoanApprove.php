@@ -20,7 +20,7 @@ class LoanApprove extends Controller
                 'message' => $loan->status === LoanStatus::APPROVED
                     ? 'Loan is already approved!'
                     : 'Loan is already paid and closed!',
-            ]);
+            ], 422);
         }
 
         $this->loanService->approveLoan($loan);

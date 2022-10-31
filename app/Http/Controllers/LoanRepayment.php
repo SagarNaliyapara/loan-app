@@ -20,7 +20,7 @@ class LoanRepayment extends Controller
                 'message' => $loan->status === LoanStatus::PAID
                     ? 'Your loan has been paid already!'
                     : 'Your loan is not approved yet!',
-            ]);
+            ], 422);
         }
 
         $this->loanService->loanRepayment($loan);

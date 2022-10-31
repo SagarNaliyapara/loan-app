@@ -7,7 +7,6 @@ use App\Models\Enums\LoanStatus;
 use App\Models\Loan;
 use App\Models\LoanRepayment;
 use App\Models\User;
-use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
@@ -25,29 +24,14 @@ class LoanService
 
     public function approveLoan(Loan $loan): void
     {
-        $date = now();
-        $now = now();
-
-        DB::beginTransaction();
-        try {
+        DB::transaction(function () use ($loan) {
             $loan->update([
                 'status' => LoanStatus::APPROVED,
             ]);
 
-            $repayments = [];
-            for ($i = 1; $i <= $loan->term; $i++) {
-                $repayments[] = [
-                    'loan_id' => $loan->id,
-                    'date' => $date->addWeek()->copy(),
-                    'created_at' => $now,
-                    'updated_at' => $now,
-                ];
-            }
+            $repayments = $this->generateRepayments($loan);
             LoanRepayment::query()->insert($repayments);
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollBack();
-        }
+        });
     }
 
     public function loanRepayment(Loan $loan): void
@@ -72,5 +56,19 @@ class LoanService
                 'status' => LoanStatus::PAID,
             ]);
         }
+    }
+
+    private function generateRepayments(Loan $loan): array
+    {
+        $now = now();
+        $date = now();
+
+        return collect()->times($loan->term, fn (): array => [
+            'loan_id' => $loan->id,
+            'date' => $date->addWeek()->copy(),
+            'created_at' => $now,
+            'updated_at' => $now,
+        ])
+            ->all();
     }
 }

@@ -2,9 +2,10 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Interfaces\ILoan;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LoanResource extends JsonResource
+class LoanResource extends JsonResource implements ILoan
 {
     public function toArray($request): array
     {
